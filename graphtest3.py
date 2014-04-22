@@ -10,28 +10,27 @@ kivy.require('1.8.0')
 
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.widget import Widget
-from kivy.app import App
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.garden.graph import Graph, MeshLinePlot
-from kivy.uix.popup import Popup
 from kivy.clock import Clock
 from kivy.uix.togglebutton import ToggleButton
 
+port = 1
+backlog = 1
+defaultdata = '0:00:04.990896,0,0,0'
+
+server_sock=BluetoothSocket( RFCOMM )
+server_sock.bind(("",port))
+print 'listening'
+server_sock.listen(1)
+print "Found"
+client_sock,address = server_sock.accept()
+print "Accepted connection from ",address, " | ", client_sock
+
 class PerformanceApp(App):
-    ###Tristan's bluetooth module for receiving
+    ###Zach/Tristan's bluetooth module for receiving
 
-    #port = 0x1001
-    #backlog = 1
-
-    #server_sock=BluetoothSocket( L2CAP )
-    #server_sock.bind(("",port))
-    #print 'listening'
-    #server_sock.listen(1)
-    #print "Found"
-    #client_sock,address = server_sock.accept()
-    #print "Accepted connection from ",address, " | ", client_sock
-    
     graph = Graph(xlabel='Time', ylabel='', x_ticks_minor=5,
         x_ticks_major=100, y_ticks_major=12,
         y_grid_label=True, x_grid_label=True, padding=5,
@@ -72,7 +71,7 @@ class PerformanceApp(App):
         self.ENGbtn.bind(on_press = self.ENGplot)
         self.COTbtn.bind(on_press = self.COTplot)
 
-        Clock.schedule_interval(self.updateUI, 1.0/20.0)
+        Clock.schedule_interval(self.updateUI, 1.0/1.0)
         return layout
 
     def RPMplot(self, RPMbtn):
@@ -107,41 +106,58 @@ class PerformanceApp(App):
             self.graph.remove_plot(plot3)
         except:
             pass
-        
-        data = "0:00:04.990896,843,28,37"#client_sock.recv(1024)   ###receive data as a string into 'data'
+
+        ###receive data as a string into 'data'
+        try:
+            data = client_sock.recv(512)
+            if (len(data) < 1):
+                data = defaultdata
+            else:
+                print data
+            
+            lastdata = data
+        except IOError, NameError:
+            data = lastdata
+
         values = data.split(',')
         
-        self.RPMlist.insert(0, random.randint(60,80))
-        if(len(self.RPMlist)>300):
-            self.RPMlist = self.RPMlist[:300]
-
-        self.ENGlist.insert(0, random.randint(20,40))
-        if(len(self.ENGlist)>300):
-            self.ENGlist = self.ENGlist[:300]
-
-        self.COTlist.insert(0, random.randint(1,30))
-        if(len(self.COTlist)>300):
-            self.COTlist = self.COTlist[:300]
-
-##        self.RPMlist.insert(0, int(values[1])/100)
+##        self.RPMlist.insert(0, random.randint(60,80))
 ##        if(len(self.RPMlist)>300):
 ##            self.RPMlist = self.RPMlist[:300]
 ##
-##        self.ENGlist.insert(0, int(values[2]))
+##        self.ENGlist.insert(0, random.randint(20,40))
 ##        if(len(self.ENGlist)>300):
 ##            self.ENGlist = self.ENGlist[:300]
 ##
-##        self.COTlist.insert(0, int(values[3]))
+##        self.COTlist.insert(0, random.randint(1,30))
 ##        if(len(self.COTlist)>300):
 ##            self.COTlist = self.COTlist[:300]
+##
+## Used for testing random numbers in the graph
         
-        self.RPMbtn.text = str('RPM: ' + str(self.RPMlist[0]))
-        self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
-        self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
+        
+        self.RPMlist.insert(0, int(values[1])/100)
+        if(len(self.RPMlist)>300):
+            self.RPMlist = self.RPMlist[:300]
 
-##        self.RPMbtn.text = str('RPM: ' + values[1])
-##        self.ENGbtn.text = str('Engine Load: ' + values[2])
-##        self.COTbtn.text = str('Coolant Temp: ' + values[3])
+        self.ENGlist.insert(0, int(values[2]))
+        if(len(self.ENGlist)>300):
+            self.ENGlist = self.ENGlist[:300]
+
+        self.COTlist.insert(0, int(values[3]))
+        if(len(self.COTlist)>300):
+            self.COTlist = self.COTlist[:300]
+        
+##        self.RPMbtn.text = str('RPM: ' + str(self.RPMlist[0]))
+##        self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
+##        self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
+##
+## Used to place random numbers in graph for testing
+##
+
+        self.RPMbtn.text = str('RPM: ' + values[1])
+        self.ENGbtn.text = str('Engine Load: ' + values[2])
+        self.COTbtn.text = str('Coolant Temp: ' + values[3])
 
         self.RPMlist.reverse()
         self.ENGlist.reverse()
@@ -165,3 +181,7 @@ class PerformanceApp(App):
 
 
 PerformanceApp().run()
+
+client_sock.close()
+server_sock.close()
+
