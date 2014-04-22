@@ -64,7 +64,7 @@ Builder.load_string("""
 					Button:
 						text: 'RWND'
 						pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-						on_press: app.mplayer.play_song()
+						on_press: app.mplayer.rewind()
 					Label:
 						size_hint: 0.3, 1
 					Button:
@@ -76,7 +76,7 @@ Builder.load_string("""
 					Button:
 						text: 'FFWD'
 						pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-						on_press: app.mplayer.play_song()
+						on_press: app.mplayer.fast_forward()
 					Label:
 						size_hint: 1, 1
 				Label:
@@ -92,6 +92,10 @@ class Dashboard(TabbedPanel):
 class MusicPlayer():
 	def play_song(x):
 		print "Playing song!"
+	def fast_forward(x):
+		print "Skipping forward!"
+	def rewind(x):
+		print "Skipping back!"
 
 class Dash(App):
 	mplayer = MusicPlayer()
