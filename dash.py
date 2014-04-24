@@ -319,6 +319,17 @@ class KVMaps(FloatLayout):
 		mv = MapViewer(maptype="satellite", provider="bing")
 		self.add_widget(mv)
 
+		box = BoxLayout(orientation='vertical')
+		box.add_widget(Label(text=app.gps_location))
+		box.add_widget(Label(text=app.gps_status))
+		toggle = BoxLayout(size_hint_y: None,
+						   height='48dp',
+						   padding='4dp')
+		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
+									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
+		box.add_widget(toggle)
+		self.add_widget(box)
+
 class Dash(App):
 	def build(self):
 		tp = TabbedPanel()
