@@ -1,7 +1,11 @@
 import kivy
+import random
 kivy.require('1.7.0')
 
+from bluetooth import *
 from kivy.app import App
+from kivy.garden.graph import Graph, MeshLinePlot
+from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
@@ -10,8 +14,27 @@ from kivy.uix.button import Button
 from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelHeader
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.stacklayout import StackLayout
 from kivy.uix.filechooser import FileChooserListView
+from kivy.uix.togglebutton import ToggleButton
 from kivy.lang import Builder
+
+port = 1
+backlog = 1
+
+server_sock=BluetoothSocket( RFCOMM )
+server_sock.bind(("",port))
+print 'listening'
+server_sock.listen(1)
+print "Found"
+client_sock,address = server_sock.accept()
+print "Accepted connection from ",address, " | ", client_sock
+client_sock.settimeout(0)
+
+## creates and accepts the initial bluetooth connection
+## sets a timeout on the client_sock socket, which is typically a
+## blocking connection. This stops the program from hanging when
+## receiving the data
 
 class MusicPlayer(BoxLayout):
 	def __init__(self, **kwargs):
