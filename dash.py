@@ -57,10 +57,6 @@ class Performance(Widget):
     ## creates the initial plot objects for the garden.graph function
     ## with defining color
 
-    RPMbtn = ToggleButton(text='RPM', size_hint=(.33,.1))
-    ENGbtn = ToggleButton(text='Engine Load', size_hint=(.33,.1))
-    COTbtn = ToggleButton(text='Coolant Temp', size_hint=(.33,.1))
-
     RPMstate = 0
     ENGstate = 0
     COTstate = 0
@@ -83,6 +79,9 @@ class Performance(Widget):
     def __init__(self):
         """Creates the layout and widget tree for performance class"""
         layout = StackLayout()
+        RPMbtn = ToggleButton(text='RPM', size_hint=(.33,.1))
+	    ENGbtn = ToggleButton(text='Engine Load', size_hint=(.33,.1))
+	    COTbtn = ToggleButton(text='Coolant Temp', size_hint=(.33,.1))
         layout.add_widget(self.RPMbtn)
         layout.add_widget(self.ENGbtn)
         layout.add_widget(self.COTbtn)
@@ -201,7 +200,7 @@ class Performance(Widget):
 ##        self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
 ##        self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
 ##
-## Used to place random numbers in graph for testing
+## 		Used to place random numbers in graph for testing
 ##
 
         self.RPMbtn.text = str('RPM: ' + values[1])
