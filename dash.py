@@ -313,22 +313,22 @@ class MusicPlayer(BoxLayout):
 	def rewind(x):
 		print "Skipping back!"
 
-class KVMaps(FloatLayout):
-	def __init__(self, **kwargs):
-		super(KVMaps, self).__init__(**kwargs)
-		mv = MapViewer(maptype="satellite", provider="bing")
-		self.add_widget(mv)
+# class KVMaps(FloatLayout, App):
+# 	def __init__(self, **kwargs):
+# 		super(KVMaps, self).__init__(**kwargs)
+# 		mv = MapViewer(maptype="satellite", provider="bing")
+# 		self.add_widget(mv)
 
-		box = BoxLayout(orientation='vertical')
-		box.add_widget(Label(text=app.gps_location))
-		box.add_widget(Label(text=app.gps_status))
-		toggle = BoxLayout(size_hint_y: None,
-						   height='48dp',
-						   padding='4dp')
-		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
-									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
-		box.add_widget(toggle)
-		self.add_widget(box)
+# 		box = BoxLayout(orientation='vertical')
+# 		box.add_widget(Label(text=app.gps_location))
+# 		box.add_widget(Label(text=app.gps_status))
+# 		toggle = BoxLayout(size_hint_y: None,
+# 						   height='48dp',
+# 						   padding='4dp')
+# 		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
+# 									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
+# 		box.add_widget(toggle)
+# 		self.add_widget(box)
 
 class Dash(App):
 	def build(self):
@@ -349,7 +349,22 @@ class Dash(App):
 		#status.content = Label(text = 'Performance, health, and eco stats go here')
 		#media.content = Label(text = 'Media player goes here')
 
-		nav.content = KVMaps()
+		mapLayout = FloatLayout()
+		mv = MapViewer(maptype="satellite", provider="bing")
+		mapLayout.add_widget(mv)
+
+		box = BoxLayout(orientation='vertical')
+		box.add_widget(Label(text=app.gps_location))
+		box.add_widget(Label(text=app.gps_status))
+		toggle = BoxLayout(size_hint_y: None,
+						   height='48dp',
+						   padding='4dp')
+		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
+									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
+		box.add_widget(toggle)
+		mapLayout.add_widget(box)
+
+		nav.content = mapLayout
 		status.content = Performance()
 		media.content = MusicPlayer()
 		return tp
