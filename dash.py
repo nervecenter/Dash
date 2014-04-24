@@ -36,7 +36,7 @@ client_sock.settimeout(0)
 ## blocking connection. This stops the program from hanging when
 ## receiving the data
 
-class Performance(Widget):
+class Performance(StackLayout):
     """
     This class contains the graphing application for the Kivy Dashboard
     Application. It accepts a buffer string from a socket connection
@@ -83,11 +83,10 @@ class Performance(Widget):
     def __init__(self, **kwargs):
         """Creates the layout and widget tree for performance class"""
         super(Performance, self).__init__(**kwargs)
-        layout = StackLayout()
-        layout.add_widget(self.RPMbtn)
-        layout.add_widget(self.ENGbtn)
-        layout.add_widget(self.COTbtn)
-        layout.add_widget(self.graph)
+        self.add_widget(self.RPMbtn)
+        self.add_widget(self.ENGbtn)
+        self.add_widget(self.COTbtn)
+        self.add_widget(self.graph)
 
         self.RPMbtn.bind(on_press = self.RPMplot)
         self.ENGbtn.bind(on_press = self.ENGplot)
