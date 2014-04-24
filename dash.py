@@ -22,17 +22,17 @@ from kivy.uix.filechooser import FileChooserListView
 from kivy.uix.togglebutton import ToggleButton
 from kivy.lang import Builder
 
-port = 1
-backlog = 1
+# port = 1
+# backlog = 1
 
-server_sock=BluetoothSocket( RFCOMM )
-server_sock.bind(("",port))
-print 'listening'
-server_sock.listen(1)
-print "Found"
-client_sock,address = server_sock.accept()
-print "Accepted connection from ",address, " | ", client_sock
-client_sock.settimeout(0)
+# server_sock=BluetoothSocket( RFCOMM )
+# server_sock.bind(("",port))
+# print 'listening'
+# server_sock.listen(1)
+# print "Found"
+# client_sock,address = server_sock.accept()
+# print "Accepted connection from ",address, " | ", client_sock
+# client_sock.settimeout(0)
 
 ## creates and accepts the initial bluetooth connection
 ## sets a timeout on the client_sock socket, which is typically a
@@ -144,15 +144,15 @@ class Performance(StackLayout):
         ## tries to remove the previously added plots to the graph
         ## this prevents ghosting on the graph itself
         
-        try:
-            data = client_sock.recv(1024)
+        # try:
+        #     data = client_sock.recv(1024)
 
-            if (len(data) < 1):
-                data = self.last_data
-            else:
-                print data
+        #     if (len(data) < 1):
+        #         data = self.last_data
+        #     else:
+        #         print data
 
-            self.last_data = data
+        #     self.last_data = data
 
         ## Receive data as a string into 'data'. If the
         ## socket produces no information, as the vehicle will
@@ -160,55 +160,55 @@ class Performance(StackLayout):
         ## the data will either get '0,0,0,0' indicating no data
         ## has been sent yet, or it will use the last good data received
             
-        except IOError, NameError:
-            data = last_data
+        # except IOError, NameError:
+        #     data = last_data
             
-        if (client_sock == False):
-            print "Socket Connection Lost"
+        # if (client_sock == False):
+        #     print "Socket Connection Lost"
             
-        values = data.split(',')
+        # values = data.split(',')
+
         ## data is split into
         
-        ##self.RPMlist.insert(0, random.randint(60,80))
-        ##if(len(self.RPMlist)>300):
-        ##      self.RPMlist = self.RPMlist[:300]
-        ##
-        ##self.ENGlist.insert(0, random.randint(20,40))
-        ##if(len(self.ENGlist)>300):
-        ##      self.ENGlist = self.ENGlist[:300]
-        ##
-        ##self.COTlist.insert(0, random.randint(1,30))
-        ##if(len(self.COTlist)>300):
-        ##      self.COTlist = self.COTlist[:300]
-        ##
-        ## Used for testing random numbers in the graph
-        
-        
-        self.RPMlist.insert(0, int(values[1])/100)
+        self.RPMlist.insert(0, random.randint(60,80))
         if(len(self.RPMlist)>300):
-            self.RPMlist = self.RPMlist[:300]
-
-        self.ENGlist.insert(0, int(values[2]))
+             self.RPMlist = self.RPMlist[:300]
+        
+        self.ENGlist.insert(0, random.randint(20,40))
         if(len(self.ENGlist)>300):
-            self.ENGlist = self.ENGlist[:300]
-
-        self.COTlist.insert(0, int(values[3]))
+             self.ENGlist = self.ENGlist[:300]
+        
+        self.COTlist.insert(0, random.randint(1,30))
         if(len(self.COTlist)>300):
-            self.COTlist = self.COTlist[:300]
+             self.COTlist = self.COTlist[:300]
+        
+        # Used for testing random numbers in the graph
+        
+        
+        # self.RPMlist.insert(0, int(values[1])/100)
+        # if(len(self.RPMlist)>300):
+        #     self.RPMlist = self.RPMlist[:300]
+
+        # self.ENGlist.insert(0, int(values[2]))
+        # if(len(self.ENGlist)>300):
+        #     self.ENGlist = self.ENGlist[:300]
+
+        # self.COTlist.insert(0, int(values[3]))
+        # if(len(self.COTlist)>300):
+        #     self.COTlist = self.COTlist[:300]
 
         ## The values (data) are inserted into their respective
         ## performance metric lists
         
-		## self.RPMbtn.text = str('RPM: ' + str(self.RPMlist[0]))
-		## self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
-		##  self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
-		##
+		self.RPMbtn.text = str('RPM: ' + str(self.RPMlist[0]))
+		self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
+		self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
+		
 		## Used to place random numbers in graph for testing
-		##
 
-        self.RPMbtn.text = str('RPM: ' + values[1])
-        self.ENGbtn.text = str('Engine Load: ' + values[2])
-        self.COTbtn.text = str('Coolant Temp: ' + values[3])
+        # self.RPMbtn.text = str('RPM: ' + values[1])
+        # self.ENGbtn.text = str('Engine Load: ' + values[2])
+        # self.COTbtn.text = str('Coolant Temp: ' + values[3])
 
         ## Updates the buttons on screen to the correct values
 
