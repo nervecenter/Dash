@@ -313,27 +313,24 @@ class MusicPlayer(BoxLayout):
 	def rewind(x):
 		print "Skipping back!"
 
-# class KVMaps(FloatLayout, App):
-# 	def __init__(self, **kwargs):
-# 		super(KVMaps, self).__init__(**kwargs)
-# 		mv = MapViewer(maptype="satellite", provider="bing")
-# 		self.add_widget(mv)
+class KVMaps(FloatLayout, App):
+	def __init__(self, **kwargs):
+		super(KVMaps, self).__init__(**kwargs)
+		mv = MapViewer(maptype="satellite", provider="bing")
+		self.add_widget(mv)
 
-# 		box = BoxLayout(orientation='vertical')
-# 		box.add_widget(Label(text=app.gps_location))
-# 		box.add_widget(Label(text=app.gps_status))
-# 		toggle = BoxLayout(size_hint_y: None,
-# 						   height='48dp',
-# 						   padding='4dp')
-# 		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
-# 									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
-# 		box.add_widget(toggle)
-# 		self.add_widget(box)
+		box = BoxLayout(orientation='vertical')
+		box.add_widget(Label(text=app.gps_location))
+		box.add_widget(Label(text=app.gps_status))
+		toggle = BoxLayout(size_hint_y: None,
+						   height='48dp',
+						   padding='4dp')
+		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
+									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
+		box.add_widget(toggle)
+		self.add_widget(box)
 
 class Dash(App):
-	gps_location = StringProperty()
-	gps_status = StringProperty('Click Start to get GPS location updates')
-
 	def build(self):
 		tp = TabbedPanel()
 		tp.do_default_tab = False
@@ -352,35 +349,11 @@ class Dash(App):
 		#status.content = Label(text = 'Performance, health, and eco stats go here')
 		#media.content = Label(text = 'Media player goes here')
 
-		self.gps = gps
-        try:
-            self.gps.configure(on_location=self.on_location,
-                    on_status=self.on_status)
-        except NotImplementedError:
-            import traceback; traceback.print_exc()
-            self.gps_status = 'GPS is not implemented for your platform'
-
-		mapLayout = FloatLayout()
-		mv = MapViewer(maptype="satellite", provider="bing")
-		self.mv.move_to(28.1403873167, 82.34676305, 5)
-		mapLayout.add_widget(mv)
-
-		box = BoxLayout(orientation='vertical')
-		box.add_widget(Label(text=app.gps_location))
-		box.add_widget(Label(text=app.gps_status))
-		toggle = BoxLayout(size_hint_y: None,
-						   height='48dp',
-						   padding='4dp')
-		toggle.add_widget(ToggleButton(text='Start' if self.state == 'normal' else 'Stop',
-									   on_state=app.gps.start() if self.state == 'down' else app.gps.stop()))
-		box.add_widget(toggle)
-		mapLayout.add_widget(box)
-
-		nav.content = mapLayout
+		nav.content = KVMaps()
 		status.content = Performance()
 		media.content = MusicPlayer()
 		return tp
-		
+
 	def on_location(self, **kwargs):
         self.gps_location = '\n'.join([
              '{}={}'.format(k, v) for k, v in kwargs.items()])
