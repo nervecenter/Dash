@@ -5,8 +5,11 @@ kivy.require('1.7.0')
 from bluetooth import *
 from kivy.app import App
 from kivy.garden.graph import Graph, MeshLinePlot
+from MapViewer import MapViewer
+from plyer import gps
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.properties import StringProperty
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.uix.image import Image
@@ -196,12 +199,12 @@ class Performance(StackLayout):
         ## The values (data) are inserted into their respective
         ## performance metric lists
         
-##        self.RPMbtn.text = str('RPM: ' + str(self.RPMlist[0]))
-##        self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
-##        self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
-##
-## 		Used to place random numbers in graph for testing
-##
+		## self.RPMbtn.text = str('RPM: ' + str(self.RPMlist[0]))
+		## self.ENGbtn.text = str('Engine Load: ' + str(self.ENGlist[0]))
+		##  self.COTbtn.text = str('Coolant Temp: ' + str(self.COTlist[0]))
+		##
+		## Used to place random numbers in graph for testing
+		##
 
         self.RPMbtn.text = str('RPM: ' + values[1])
         self.ENGbtn.text = str('Engine Load: ' + values[2])
@@ -310,6 +313,12 @@ class MusicPlayer(BoxLayout):
 	def rewind(x):
 		print "Skipping back!"
 
+class KVMaps(FloatLayout):
+	def __init__(self, **kwargs):
+		super(KVMaps, self).__init__(**kwargs)
+		mv = MapViewer(maptype="satellite", provider="bing")
+		self.add_widget(mv)
+
 class Dash(App):
 	def build(self):
 		tp = TabbedPanel()
@@ -325,10 +334,11 @@ class Dash(App):
 		tp.add_widget(status)
 		tp.add_widget(media)
 
-		nav.content = Label(text = 'Nav system goes here')
+		#nav.content = Label(text = 'Nav system goes here')
 		#status.content = Label(text = 'Performance, health, and eco stats go here')
 		#media.content = Label(text = 'Media player goes here')
 
+		nav.content = KVMaps()
 		status.content = Performance()
 		media.content = MusicPlayer()
 		return tp
