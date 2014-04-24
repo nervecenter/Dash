@@ -234,6 +234,6 @@ class PerformanceApp(App):
         self.COTlist.reverse()
 
         ## Reverses the list again for correct data parsing
-        
-PerformanceApp().run()
+if __name__ == '__main__':
+	PerformanceApp().run()
 
