@@ -331,6 +331,9 @@ class MusicPlayer(BoxLayout):
 # 		self.add_widget(box)
 
 class Dash(App):
+	gps_location = StringProperty()
+	gps_status = StringProperty('Click Start to get GPS location updates')
+
 	def build(self):
 		tp = TabbedPanel()
 		tp.do_default_tab = False
@@ -349,8 +352,17 @@ class Dash(App):
 		#status.content = Label(text = 'Performance, health, and eco stats go here')
 		#media.content = Label(text = 'Media player goes here')
 
+		self.gps = gps
+        try:
+            self.gps.configure(on_location=self.on_location,
+                    on_status=self.on_status)
+        except NotImplementedError:
+            import traceback; traceback.print_exc()
+            self.gps_status = 'GPS is not implemented for your platform'
+
 		mapLayout = FloatLayout()
 		mv = MapViewer(maptype="satellite", provider="bing")
+		self.mv.move_to(28.1403873167, 82.34676305, 5)
 		mapLayout.add_widget(mv)
 
 		box = BoxLayout(orientation='vertical')
@@ -368,6 +380,12 @@ class Dash(App):
 		status.content = Performance()
 		media.content = MusicPlayer()
 		return tp
+		
+	def on_location(self, **kwargs):
+        self.gps_location = '\n'.join([
+             '{}={}'.format(k, v) for k, v in kwargs.items()])
+    def on_status(self, stype, status):
+        self.gps_status = 'type={}\n{}'.format(stype, status)
 
 if __name__ == '__main__':
 	Dash().run()
