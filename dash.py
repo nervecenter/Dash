@@ -57,6 +57,10 @@ class Performance(Widget):
     ## creates the initial plot objects for the garden.graph function
     ## with defining color
 
+    RPMbtn = ToggleButton(text='RPM', size_hint=(.33,.1))
+    ENGbtn = ToggleButton(text='Engine Load', size_hint=(.33,.1))
+    COTbtn = ToggleButton(text='Coolant Temp', size_hint=(.33,.1))
+
     RPMstate = 0
     ENGstate = 0
     COTstate = 0
@@ -76,12 +80,10 @@ class Performance(Widget):
     ## The graph will build from this list, and if it is not initialized to
     ## zero beforehand, it will get an indexing error
     
-    def __init__(self):
+    def __init__(self, **kwargs):
         """Creates the layout and widget tree for performance class"""
+        super(Performance, self).__init__(**kwargs)
         layout = StackLayout()
-        RPMbtn = ToggleButton(text='RPM', size_hint=(.33,.1))
-	    ENGbtn = ToggleButton(text='Engine Load', size_hint=(.33,.1))
-	    COTbtn = ToggleButton(text='Coolant Temp', size_hint=(.33,.1))
         layout.add_widget(self.RPMbtn)
         layout.add_widget(self.ENGbtn)
         layout.add_widget(self.COTbtn)
@@ -94,7 +96,6 @@ class Performance(Widget):
         Clock.schedule_interval(self.updateUI, 1.0/10.0)
         ## pings the updateUI function ten times a second, giving
         ## the graph a framerate of 10fps
-        return layout
 
     def RPMplot(self, RPMbtn):
         """sets the state for the RPM button widget"""
