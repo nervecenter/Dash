@@ -1,5 +1,4 @@
 # dash.py
-# Copyright or GPL?????
 # Python Dashboard Team
 # Tristan Hook, David Drew, Arian Milanian, Zach Sutherland, Chris Collazo
 
