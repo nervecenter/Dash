@@ -1,3 +1,15 @@
+'''
+This file was publicly available through the SANS institute
+The author of this file is Rob VandenBrink
+
+This presentation can be downloaded at 
+https://isc.sans.edu/presentations/sansfire2012-Rob_Vandenbrink-obd-preso.pdf
+
+The module can be accessed at
+https://isc.sans.edu/presentations/sansfire2012-Rob_Vandenbrink-obd-final.zip
+'''
+
+
 def getvin(ser):
      chk = "09 02\r"
      ser.write(chk)

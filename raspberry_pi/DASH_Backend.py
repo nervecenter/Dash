@@ -23,7 +23,6 @@ Blue_Sock = BluetoothSocket( RFCOMM )
 Blue_Sock.setblocking( False )
 
 port = 1
-# bd_addr = '00:26:08:C4:9E:58'
 bd_addr = '28:18:78:D9:C2:FC'
 
 #**************************************************Functions**************************************************
@@ -80,8 +79,7 @@ start_time = datetime.now()			# Timestamp of first communication with engine
 frame = Open_File_USB_Drive() 		# Open sensor logging file
 Blue_Sock = Open_Bluetooth_Socket() # Create RFCOMM socket
 time.sleep(1)						# Pause for communcation syncing
-#Blue_Sock.setblocking( False )
-#ser.write('STSBR 115200\r')
+
 
 if ser.isOpen():					# Print the condition of serial comm to terminal window
 	print 'Serial port is open and communicating'
@@ -98,7 +96,6 @@ try:
 		if Blue_Sock:
 			Send_Bluetooth_Data(Blue_Sock,data)
 		else:
-                        #print 'Socket messed up   ',Blue_Sock
 			Blue_Sock = Open_Bluetooth_Socket()
 		print data
 		
