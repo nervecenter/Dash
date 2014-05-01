@@ -243,8 +243,11 @@ class Performance(StackLayout):
 class MusicPlayer(BoxLayout):
 	def __init__(self, **kwargs):
 		super(MusicPlayer, self).__init__(**kwargs)
+        # Implement music player in two horizontal panes
 		self.orientation = 'horizontal'
 
+        # This column is our file manager, uses basic
+        # Kivy file manager for now
 		fileMan = BoxLayout(orientation='vertical',
 							pos_hint={'center_x': 0.5,'center_y': 0.5}, 
 							size_hint=(0.1, 1),
@@ -252,6 +255,10 @@ class MusicPlayer(BoxLayout):
 		fileManPlaceholder = FileChooserListView()
 		fileMan.add_widget(fileManPlaceholder)
 
+        # This is the column for our player, containing
+        # song name, album art, playback controls. Labels
+        # are used to pad space, since we don't have a
+        # drag 'n drop editor.
 		player = BoxLayout(orientation='vertical',
 						   size_hint=(0.1,1))
 		player.add_widget(Label(size_hint=(1, 0.1)))
@@ -272,10 +279,8 @@ class MusicPlayer(BoxLayout):
 		player.add_widget(Label(size_hint=(1, 0.05)))
 		player.add_widget(Image(source='graphics/arcadium.jpg'))
 
-		#Pad the space between album art and buttons
 		player.add_widget(Label(size_hint=(1, 0.1)))
 		
-		# Playback buttons initialized and laid out
 		playBackButtons = BoxLayout(orientation='horizontal',
 									size_hint=(1,0.24))
 		playBackButtons.add_widget(Label(size_hint=(1,1)))
@@ -300,12 +305,13 @@ class MusicPlayer(BoxLayout):
 		playBackButtons.add_widget(Label(size_hint=(1,1)))
 		player.add_widget(playBackButtons)
 
-		#Pad the buttons on the bottom
 		player.add_widget(Label(size_hint=(1,0.1)))
 
 		self.add_widget(fileMan)
 		self.add_widget(player)
-		
+	
+    # Playback buttons print to console for now,
+    # since Python media playback support is iffy.	
 	def play_song(x):
 		print "Playing song!"
 	def fast_forward(x):
@@ -332,6 +338,10 @@ class KVMaps(FloatLayout, App):
 
 class Dash(App):
 	def build(self):
+        # App is built as a tabbed panel with three tabs:
+        # Navigation, Status, and Media. These allow quick
+        # access to the things you actually want to do in
+        # a car without excessive UI navigation.
 		tp = TabbedPanel()
 		tp.do_default_tab = False
 		tp.tab_pos = 'bottom_mid'
@@ -349,6 +359,7 @@ class Dash(App):
 		#status.content = Label(text = 'Performance, health, and eco stats go here')
 		#media.content = Label(text = 'Media player goes here')
 
+        # Each tab's content is implemented in a tab above.
 		nav.content = KVMaps()
 		status.content = Performance()
 		media.content = MusicPlayer()
