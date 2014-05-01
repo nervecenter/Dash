@@ -8,8 +8,8 @@ Python source file is a downloadable, open-source library.
 
 dash.py contains the work of David Drew, Chris Collazo, Arian Milanian, and Zach Sutherland.
 
-DASH_Backend.py is implemented on an embedded linux system (Raspberry-Pi)
-DASH_Backend.py contains the work of Tristan Hook and David Drew.
+DASH_Backend.py is implemented on an embedded Linux system (Raspberry-Pi);
+it contains the work of Tristan Hook and David Drew.
 
 Other than that, the album art in the graphics folder is a copyright of
 the Red Hot Chili Peppers, but the button graphics are our work.
