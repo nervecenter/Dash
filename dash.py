@@ -241,6 +241,9 @@ class Performance(StackLayout):
         ## Reverses the list again for correct data parsing
 
 class MusicPlayer(BoxLayout):
+    '''
+    This class initializes and implements our music player UI layout.
+    '''
 	def __init__(self, **kwargs):
 		super(MusicPlayer, self).__init__(**kwargs)
         # Implement music player in two horizontal panes
@@ -312,11 +315,14 @@ class MusicPlayer(BoxLayout):
 	
     # Playback buttons print to console for now,
     # since Python media playback support is iffy.	
-	def play_song(x):
+	def play_song(self):
+        '''Plays a given song.'''
 		print "Playing song!"
-	def fast_forward(x):
+	def fast_forward(self):
+        '''Fast-forwards the playing song.'''
 		print "Skipping forward!"
-	def rewind(x):
+	def rewind(self):
+        '''Rewings the playing song.'''
 		print "Skipping back!"
 
 class KVMaps(FloatLayout, App):
