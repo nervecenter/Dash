@@ -1,3 +1,8 @@
+# dash.py
+# Copyright or GPL?????
+# Python Dashboard Team
+# Tristan Hook, David Drew, Arian Milanian, Zach Sutherland, Chris Collazo
+
 import kivy
 import random
 kivy.require('1.7.0')
