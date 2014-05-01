@@ -22,17 +22,17 @@ from kivy.uix.filechooser import FileChooserListView
 from kivy.uix.togglebutton import ToggleButton
 from kivy.lang import Builder
 
-# port = 1
-# backlog = 1
+port = 1
+backlog = 1
 
-# server_sock=BluetoothSocket( RFCOMM )
-# server_sock.bind(("",port))
-# print 'listening'
-# server_sock.listen(1)
-# print "Found"
-# client_sock,address = server_sock.accept()
-# print "Accepted connection from ",address, " | ", client_sock
-# client_sock.settimeout(0)
+server_sock=BluetoothSocket( RFCOMM )
+server_sock.bind(("",port))
+print 'listening'
+server_sock.listen(1)
+print "Found"
+client_sock,address = server_sock.accept()
+print "Accepted connection from ",address, " | ", client_sock
+client_sock.settimeout(0)
 
 ## creates and accepts the initial bluetooth connection
 ## sets a timeout on the client_sock socket, which is typically a
@@ -255,22 +255,22 @@ class MusicPlayer(BoxLayout):
 		player = BoxLayout(orientation='vertical',
 						   size_hint=(0.1,1))
 		player.add_widget(Label(size_hint=(1, 0.1)))
-		songName = Label(text='Song Name',
+		songName = Label(text='Snow (Hey Oh)',
 						 font_size=30,
 						 size_hint=(1,0.1),
 						 halign='left',
 						 valign='bottom',
-						 pos_hint={'center_x':0.2,'center_y':0.5})
+						 pos_hint={'center_x':0.3,'center_y':0.5})
 		player.add_widget(songName)
-		artistName = Label(text='Artist Name',
+		artistName = Label(text='Red Hot Chili Peppers',
 						   font_size=20,
 						   size_hint=(1,0.2),
 						   halign='left',
 						   valign='top',
-						   pos_hint={'center_x':0.15,'center_y':0.5})
+						   pos_hint={'center_x':0.3,'center_y':0.5})
 		player.add_widget(artistName)
 		player.add_widget(Label(size_hint=(1, 0.05)))
-		player.add_widget(Image(source='graphics/brawl.jpg'))
+		player.add_widget(Image(source='graphics/arcadium.jpg'))
 
 		#Pad the space between album art and buttons
 		player.add_widget(Label(size_hint=(1, 0.1)))
